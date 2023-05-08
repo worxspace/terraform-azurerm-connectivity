@@ -10,6 +10,8 @@ resource "azurecaf_name" "hub-name" {
 resource "azurerm_resource_group" "connectivity-resource-group" {
   name     = azurecaf_name.hub-name.results.azurerm_resource_group
   location = var.location
+
+  tags = var.global-tags
 }
 
 resource "azurerm_virtual_network" "hub-vnet" {
@@ -17,6 +19,8 @@ resource "azurerm_virtual_network" "hub-vnet" {
   resource_group_name = azurerm_resource_group.connectivity-resource-group.name
   address_space       = var.hub-vnet-address-space
   location            = var.location
+
+  tags = var.global-tags
 }
 
 resource "azurerm_subnet" "bastion-subnet" {
@@ -26,4 +30,6 @@ resource "azurerm_subnet" "bastion-subnet" {
   resource_group_name  = azurerm_resource_group.connectivity-resource-group.name
   virtual_network_name = azurerm_virtual_network.hub-vnet.name
   address_prefixes     = [var.bastion-subnet-space]
+
+  tags = var.global-tags
 }

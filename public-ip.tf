@@ -7,6 +7,8 @@ resource "azurecaf_name" "public-ip-resource-group-name" {
 resource "azurerm_resource_group" "public-ip-resource-group" {
   name     = azurecaf_name.public-ip-resource-group-name.result
   location = var.location
+
+  tags = var.global-tags
 }
 
 resource "azurecaf_name" "public-ip-prefix-name" {
@@ -24,6 +26,7 @@ resource "azurerm_public_ip_prefix" "public-ip-prefix" {
   location            = var.location
   resource_group_name = azurerm_resource_group.public-ip-resource-group.name
   prefix_length       = each.value.prefix-length
+  
   tags                = each.value.tags
 }
 

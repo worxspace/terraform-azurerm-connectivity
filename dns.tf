@@ -7,10 +7,13 @@ resource "azurecaf_name" "public-dns-resource-group-name" {
 resource "azurerm_resource_group" "public-dns-resource-group" {
   name     = azurecaf_name.public-dns-resource-group-name.result
   location = var.location
+
+  tags = var.global-tags
 }
 
 module "public-dns" {
-  source   = "../PublicDNS"
+  source = "github.com/worxspace/tfm-azure-publicdnszone?ref=0.0.2"
+
   for_each = var.public-DNS-Zones == null ? {} : { for dns in var.public-DNS-Zones : dns.name => dns }
 
   name                = each.key
@@ -22,4 +25,6 @@ module "public-dns" {
   MX-records          = can(each.value.MX-records) ? each.value.MX-records : null
   TXT-records         = can(each.value.TXT-records) ? each.value.TXT-records : null
   SRV-records         = can(each.value.SRV-records) ? each.value.SRV-records : null
+
+  tags = var.global-tags
 }

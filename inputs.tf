@@ -1,23 +1,23 @@
-variable "tenant-name" {
-  type = string
-}
-
 variable "tenant-short-name" {
   type = string
+  description = "value to be used as prefix for all resource names"
 }
 
 variable "location" {
   type    = string
   default = "switzerlandnorth"
+  description = "location for azure resource deployment"
 }
 
 variable "hub-vnet-address-space" {
   type = list(string)
+  description = "address space assigned to the hub vnet"
 }
 
 variable "bastion-subnet-space" {
   type    = string
   default = null
+  description = "address space assigned to the bastion subnet"
 }
 
 variable "public-DNS-Zones" {
@@ -74,6 +74,7 @@ variable "public-DNS-Zones" {
     })))
   }))
   default = null
+  description = "values to be used for the creation of public DNS zones"
 }
 
 variable "public-IP-prefixes" {
@@ -83,6 +84,7 @@ variable "public-IP-prefixes" {
     tags          = optional(map(string))
   }))
   default = null
+  description = "values to be used for the creation of public IP prefixes"
 }
 
 variable "public-IPs" {
@@ -92,6 +94,7 @@ variable "public-IPs" {
     sku               = optional(string, "Standard")
   }))
   default = null
+  description = "values to be used for the creation of public IPs"
 }
 
 variable "bastion-configuration" {
