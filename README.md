@@ -65,7 +65,8 @@ so make sure to provide the project-name, prefixes, suffixes as necessary
 
 | Name | Description |
 |------|-------------|
-| <a name="output_hub-vnet-id"></a> [hub-vnet-id](#output\_hub-vnet-id) | n/a |
-| <a name="output_hub-vnet-name"></a> [hub-vnet-name](#output\_hub-vnet-name) | n/a |
-| <a name="output_hub-vnet-resource-group-name"></a> [hub-vnet-resource-group-name](#output\_hub-vnet-resource-group-name) | n/a |
-| <a name="output_public-IPs"></a> [public-IPs](#output\_public-IPs) | n/a |
+| <a name="output_hub-vnet-id"></a> [hub-vnet-id](#output\_hub-vnet-id) | resource id of the hub vnet |
+| <a name="output_hub-vnet-name"></a> [hub-vnet-name](#output\_hub-vnet-name) | name of the hub vnet |
+| <a name="output_hub-vnet-resource-group-name"></a> [hub-vnet-resource-group-name](#output\_hub-vnet-resource-group-name) | name of the hub resource group |
+| <a name="output_public-IPs"></a> [public-IPs](#output\_public-IPs) | map of public IPs |
+| <a name="output_public-ip-prefixes"></a> [public-ip-prefixes](#output\_public-ip-prefixes) | map of public IP prefixes |
