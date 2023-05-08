@@ -3,8 +3,9 @@ resource "azurecaf_name" "hub-name" {
     "azurerm_resource_group",
     "azurerm_virtual_network"
   ]
-  name     = "hub"
-  prefixes = [var.tenant-short-name]
+  name          = "${var.project-name}-hub"
+  prefixes      = var.resource-prefixes
+  suffixes      = var.resource-suffixes
 }
 
 resource "azurerm_resource_group" "connectivity-resource-group" {

@@ -1,7 +1,8 @@
 resource "azurecaf_name" "public-dns-resource-group-name" {
   resource_type = "azurerm_resource_group"
-  name          = "public-dns"
-  prefixes      = [var.tenant-short-name]
+  name          = "${var.project-name}-dns"
+  prefixes      = var.resource-prefixes
+  suffixes      = var.resource-suffixes
 }
 
 resource "azurerm_resource_group" "public-dns-resource-group" {

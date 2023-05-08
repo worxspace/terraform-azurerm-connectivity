@@ -1,7 +1,8 @@
 resource "azurecaf_name" "public-ip-resource-group-name" {
   resource_type = "azurerm_resource_group"
-  name          = "public-ip"
-  prefixes      = [var.tenant-short-name]
+  name          = "${var.project-name}-pip"
+  prefixes      = var.resource-prefixes
+  suffixes      = var.resource-suffixes
 }
 
 resource "azurerm_resource_group" "public-ip-resource-group" {
@@ -15,8 +16,9 @@ resource "azurecaf_name" "public-ip-prefix-name" {
   for_each = var.public-IP-prefixes == null ? {} : { for pipp in var.public-IP-prefixes : pipp.name => pipp }
 
   resource_type = "azurerm_public_ip_prefix"
-  name          = each.value.name
-  prefixes      = [var.tenant-short-name]
+  name          = "${var.project-name}-${each.value.name}"
+  prefixes      = var.resource-prefixes
+  suffixes      = var.resource-suffixes
 }
 
 resource "azurerm_public_ip_prefix" "public-ip-prefix" {
@@ -26,16 +28,17 @@ resource "azurerm_public_ip_prefix" "public-ip-prefix" {
   location            = var.location
   resource_group_name = azurerm_resource_group.public-ip-resource-group.name
   prefix_length       = each.value.prefix-length
-  
-  tags                = each.value.tags
+
+  tags = each.value.tags
 }
 
 resource "azurecaf_name" "public-ip-name" {
   for_each = var.public-IPs == null ? {} : { for pip in var.public-IPs : pip.name => pip }
 
   resource_type = "azurerm_public_ip"
-  name     = each.value.name
-  prefixes = [var.tenant-short-name]
+  name          = "${var.project-name}-${each.value.name}"
+  prefixes      = var.resource-prefixes
+  suffixes      = var.resource-suffixes
 }
 
 resource "azurerm_public_ip" "public-ip" {

@@ -4,8 +4,9 @@ resource "azurecaf_name" "bastion-name" {
     "azurerm_bastion_host",
     "azurerm_public_ip"
   ]
-  name     = "bastion"
-  prefixes = [var.tenant-short-name]
+  name     = "${var.project-name}-bastion"
+  prefixes = var.resource-prefixes
+  suffixes = var.resource-suffixes
 }
 
 resource "azurerm_resource_group" "bastion-resource-group" {

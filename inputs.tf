@@ -1,12 +1,31 @@
-variable "tenant-short-name" {
-  type = string
-  description = "value to be used as prefix for all resource names"
+variable "resource-group-name" {
+  description = "resource group where you want to create the virtual machines"
+  type        = string
 }
 
 variable "location" {
-  type    = string
-  default = "switzerlandnorth"
-  description = "location for azure resource deployment"
+  type        = string
+  default     = "switzerlandnorth"
+  description = "value for the location of the virtual machines"
+}
+
+variable "project-name" {
+  type        = string
+  description = "used as the main part of the name of the virtual machine"
+}
+
+variable "resource-prefixes" {
+  type        = list(string)
+  description = "these are prefixed to resource names and usually include the tenant short name and/or the environment name"
+
+  default = []
+}
+
+variable "resource-suffixes" {
+  type        = list(string)
+  description = "these are appended to resource names and usually include the numbers when multiple resource with the same name exist"
+
+  default = []
 }
 
 variable "hub-vnet-address-space" {
