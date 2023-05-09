@@ -37,12 +37,6 @@ resource "azurerm_bastion_host" "bastion-basic" {
 
   copy_paste_enabled = var.bastion-configuration.copy_paste_enabled
 
-  # standard features
-  file_copy_enabled      = var.bastion-configuration.copy_paste_enabled
-  ip_connect_enabled     = var.bastion-configuration.copy_paste_enabled
-  shareable_link_enabled = var.bastion-configuration.copy_paste_enabled
-  tunneling_enabled      = var.bastion-configuration.copy_paste_enabled
-
   ip_configuration {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.bastion-subnet[0].id
@@ -62,10 +56,10 @@ resource "azurerm_bastion_host" "bastion-std" {
   sku = "Standard"
 
   copy_paste_enabled     = var.bastion-configuration.copy_paste_enabled
-  file_copy_enabled      = var.bastion-configuration.copy_paste_enabled
-  ip_connect_enabled     = var.bastion-configuration.copy_paste_enabled
-  shareable_link_enabled = var.bastion-configuration.copy_paste_enabled
-  tunneling_enabled      = var.bastion-configuration.copy_paste_enabled
+  file_copy_enabled      = var.bastion-configuration.file_copy_enabled
+  ip_connect_enabled     = var.bastion-configuration.ip_connect_enabled
+  shareable_link_enabled = var.bastion-configuration.shareable_link_enabled
+  tunneling_enabled      = var.bastion-configuration.tunneling_enabled
 
   ip_configuration {
     name                 = "configuration"

@@ -27,5 +27,5 @@ module "public-dns" {
   TXT-records         = can(each.value.TXT-records) ? each.value.TXT-records : null
   SRV-records         = can(each.value.SRV-records) ? each.value.SRV-records : null
 
-  tags = var.global-tags
+  global-tags = var.global-tags
 }
