@@ -3,14 +3,14 @@ output "hub-vnet-resource-group-name" {
   description = "name of the hub resource group"
 }
 
-output "hub-vnet-name" {
-  value = azurerm_virtual_network.hub-vnet.name
-  description = "name of the hub vnet"
+output "bastion-vnet-name" {
+  value = azurerm_virtual_network.bastion.name
+  description = "name of the bastion vnet"
 }
 
-output "hub-vnet-id" {
-  value = azurerm_virtual_network.hub-vnet.id
-  description = "resource id of the hub vnet"
+output "bastion-vnet-id" {
+  value = azurerm_virtual_network.bastion.id
+  description = "resource id of the bastion vnet"
 }
 
 output "public-IPs" {

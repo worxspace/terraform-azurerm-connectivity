@@ -1,6 +1,7 @@
 resource "azurecaf_name" "bastion-name" {
   resource_types = [
     "azurerm_resource_group",
+    "azurerm_virtual_network",
     "azurerm_bastion_host",
     "azurerm_public_ip"
   ]
@@ -24,6 +25,24 @@ resource "azurerm_public_ip" "bastion-ip" {
   sku                 = "Standard"
 
   tags = var.global-tags
+}
+
+resource "azurerm_virtual_network" "bastion" {
+  name                = azurecaf_name.bastion-name.results.azurerm_virtual_network
+  location            = var.location
+  resource_group_name = azurerm_resource_group.bastion-resource-group.name
+  address_space       = [var.bastion-address-space]
+
+  tags = var.global-tags
+}
+
+resource "azurerm_subnet" "bastion-subnet" {
+  count = var.bastion-address-space == null ? 0 : 1
+
+  name                 = "AzureBastionSubnet"
+  resource_group_name  = azurerm_resource_group.bastion-resource-group.name
+  virtual_network_name = azurerm_virtual_network.bastion.name
+  address_prefixes     = [var.bastion-address-space]
 }
 
 resource "azurerm_bastion_host" "bastion-basic" {

@@ -23,15 +23,37 @@ variable "resource-suffixes" {
   default = []
 }
 
-variable "hub-vnet-address-space" {
-  type = list(string)
-  description = "address space assigned to the hub vnet"
+variable "hubs" {
+  type = list(object({
+    name          = string
+    address-space = string
+    vnets = list(object({
+      name = string
+      id   = string
+    }))
+    vpn-sites = list(object({
+      name          = string
+      address-space = optional(list(string), null)
+      links = list(object({
+        name     = string
+        ip       = string
+        provider = string
+        speed    = string
+        bgp = optional(object({
+          asn                 = number
+          bgp_peering_address = string
+        }), null)
+      }))
+    }))
+  }))
+  default     = []
+  description = "list of vpn sites to be connected to the virtual hub"
 }
 
-variable "bastion-subnet-space" {
-  type    = string
-  default = null
-  description = "address space assigned to the bastion subnet"
+variable "bastion-address-space" {
+  type        = string
+  default     = null
+  description = "address space assigned to the bastion"
 }
 
 variable "public-DNS-Zones" {
@@ -87,7 +109,7 @@ variable "public-DNS-Zones" {
       })
     })))
   }))
-  default = null
+  default     = null
   description = "values to be used for the creation of public DNS zones"
 }
 
@@ -97,7 +119,7 @@ variable "public-IP-prefixes" {
     prefix-length = number
     tags          = optional(map(string))
   }))
-  default = null
+  default     = null
   description = "values to be used for the creation of public IP prefixes"
 }
 
@@ -107,21 +129,21 @@ variable "public-IPs" {
     allocation-method = optional(string, "Static")
     sku               = optional(string, "Standard")
   }))
-  default = null
+  default     = null
   description = "values to be used for the creation of public IPs"
 }
 
 variable "bastion-configuration" {
   type = object({
-    sku = optional(string, "Standard")
-    scale_units = optional(number, 2)
-    copy_paste_enabled = optional(bool, true)
-    file_copy_enabled  = optional(bool, false)
-    ip_connect_enabled = optional(bool, false)
+    sku                    = optional(string, "Standard")
+    scale_units            = optional(number, 2)
+    copy_paste_enabled     = optional(bool, true)
+    file_copy_enabled      = optional(bool, false)
+    ip_connect_enabled     = optional(bool, false)
     shareable_link_enabled = optional(bool, false)
-    tunneling_enabled = optional(bool, false)
+    tunneling_enabled      = optional(bool, false)
   })
-  default = null
+  default     = null
   description = "specific settings for the configuration of Azure Bastion"
 }
 
