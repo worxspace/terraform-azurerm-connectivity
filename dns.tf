@@ -13,7 +13,8 @@ resource "azurerm_resource_group" "public-dns-resource-group" {
 }
 
 module "public-dns" {
-  source = "github.com/worxspace/tfm-azure-publicdnszone?ref=0.0.2"
+  source  = "app.terraform.io/worxspace/publicdnszone/azurerm"
+  version = "~>0.0.2"
 
   for_each = var.public-DNS-Zones == null ? {} : { for dns in var.public-DNS-Zones : dns.name => dns }
 
