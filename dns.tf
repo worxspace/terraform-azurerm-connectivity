@@ -1,7 +1,7 @@
 resource "azurecaf_name" "public-dns-resource-group-name" {
   resource_type = "azurerm_resource_group"
   name          = "${var.project-name}_dns"
-  prefixes      = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  prefixes      = var.resource-prefixes
   suffixes      = concat(var.resource-suffixes, ["001"])
 }
 

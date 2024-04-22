@@ -14,7 +14,7 @@ resource "azurecaf_name" "hub-name" {
     "azurerm_virtual_wan"
   ]
   name     = "${var.project-name}_hub"
-  prefixes = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  prefixes = var.resource-prefixes
   suffixes = concat(var.resource-suffixes, ["001"])
 }
 
@@ -23,7 +23,7 @@ resource "azurecaf_name" "s2s" {
     "azurerm_point_to_site_vpn_gateway"
   ]
   name     = "${var.project-name}_hub_s2s"
-  prefixes = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  prefixes = var.resource-prefixes
   suffixes = concat(var.resource-suffixes, ["001"])
 }
 
@@ -32,7 +32,7 @@ resource "azurecaf_name" "p2s" {
     "azurerm_point_to_site_vpn_gateway"
   ]
   name     = "${var.project-name}_hub_p2s"
-  prefixes = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  prefixes = var.resource-prefixes
   suffixes = concat(var.resource-suffixes, ["001"])
 }
 

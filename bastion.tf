@@ -6,7 +6,7 @@ resource "azurecaf_name" "bastion-name" {
     "azurerm_public_ip"
   ]
   name     = "${var.project-name}_bastion"
-  prefixes = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  prefixes = var.resource-prefixes
   suffixes = concat(var.resource-suffixes, ["001"])
 }
 

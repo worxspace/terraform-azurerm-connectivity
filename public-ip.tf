@@ -1,7 +1,7 @@
 resource "azurecaf_name" "public-ip-resource-group-name" {
   resource_type = "azurerm_resource_group"
   name          = "${var.project-name}_pip"
-  prefixes      = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  prefixes      = var.resource-prefixes
   suffixes      = concat(var.resource-suffixes, ["001"])
 }
 
@@ -17,7 +17,7 @@ resource "azurecaf_name" "public-ip-prefix-name" {
 
   resource_type = "azurerm_public_ip_prefix"
   name          = "${var.project-name}_${each.value.name}"
-  prefixes      = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  prefixes      = var.resource-prefixes
   suffixes      = concat(var.resource-suffixes, ["001"])
 }
 
@@ -37,7 +37,7 @@ resource "azurecaf_name" "public-ip-name" {
 
   resource_type = "azurerm_public_ip"
   name          = "${var.project-name}_${each.value.name}"
-  prefixes      = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  prefixes      = var.resource-prefixes
   suffixes      = concat(var.resource-suffixes, ["001"])
 }
 
