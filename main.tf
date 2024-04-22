@@ -11,12 +11,29 @@ resource "azurecaf_name" "hub-name" {
   resource_types = [
     "azurerm_resource_group",
     "azurerm_virtual_network",
-    "azurerm_virtual_wan",
+    "azurerm_virtual_wan"
+  ]
+  name     = "${var.project-name}_hub"
+  prefixes = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  suffixes = concat(var.resource-suffixes, ["001"])
+}
+
+resource "azurecaf_name" "s2s" {
+  resource_types = [
     "azurerm_point_to_site_vpn_gateway"
   ]
-  name     = "${var.project-name}-hub"
-  prefixes = var.resource-prefixes
-  suffixes = var.resource-suffixes
+  name     = "${var.project-name}_hub_s2s"
+  prefixes = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  suffixes = concat(var.resource-suffixes, ["001"])
+}
+
+resource "azurecaf_name" "p2s" {
+  resource_types = [
+    "azurerm_point_to_site_vpn_gateway"
+  ]
+  name     = "${var.project-name}_hub_p2s"
+  prefixes = concat(var.resource-prefixes, [local.builtin_azure_backup_geo_codes[var.location]])
+  suffixes = concat(var.resource-suffixes, ["001"])
 }
 
 resource "azurerm_resource_group" "connectivity-resource-group" {
@@ -51,8 +68,8 @@ module "vhub" {
   vnets     = concat(each.value.vnets, [{ name = "bastion", id = azurerm_virtual_network.bastion.id }])
   vpn-sites = each.value.vpn-sites
 
-  vpn-s2s-gw-name = "${azurecaf_name.hub-name.results.azurerm_point_to_site_vpn_gateway}-s2s"
-  vpn-p2s-gw-name = "${azurecaf_name.hub-name.results.azurerm_point_to_site_vpn_gateway}-p2s"
+  vpn-s2s-gw-name = azurecaf_name.s2s.results.azurerm_point_to_site_vpn_gateway
+  vpn-p2s-gw-name = azurecaf_name.p2s.results.azurerm_point_to_site_vpn_gateway
 
   user-vpn-config = {
     enabled       = each.value.user-vpn-config.tenant-id != null
