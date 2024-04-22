@@ -11,7 +11,8 @@ resource "azurecaf_name" "hub-name" {
   resource_types = [
     "azurerm_resource_group",
     "azurerm_virtual_network",
-    "azurerm_virtual_wan"
+    "azurerm_virtual_wan",
+    "azurerm_point_to_site_vpn_gateway"
   ]
   name     = "${var.project-name}-hub"
   prefixes = var.resource-prefixes
@@ -49,6 +50,17 @@ module "vhub" {
 
   vnets     = concat(each.value.vnets, [{ name = "bastion", id = azurerm_virtual_network.bastion.id }])
   vpn-sites = each.value.vpn-sites
+
+  vpn-s2s-gw-name = "${azurecaf_name.hub-name.results.azurerm_point_to_site_vpn_gateway}-s2s"
+  vpn-p2s-gw-name = "${azurecaf_name.hub-name.results.azurerm_point_to_site_vpn_gateway}-p2s"
+
+  user-vpn-config = {
+    enabled       = each.value.user-vpn-config.tenant-id != null
+    ad-group      = each.value.user-vpn-config.ad-group-name
+    address-space = each.value.user-vpn-config.address-space
+    dns-servers   = each.value.user-vpn-config.dns-servers
+    tenant-id     = each.value.user-vpn-config.tenant-id
+  }
 
   global-tags = var.global-tags
 }

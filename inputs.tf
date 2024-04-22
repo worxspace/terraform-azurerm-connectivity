@@ -45,6 +45,17 @@ variable "hubs" {
         }), null)
       }))
     }))
+    user-vpn-config = optional(object({
+      tenant-id     = string
+      ad-group-name = string
+      address-space = list(string)
+      dns-servers   = list(string)
+    }), {
+      tenant-id     = null
+      ad-group-name = null
+      address-space = []
+      dns-servers   = []
+    })
   }))
   default     = []
   description = "list of vpn sites to be connected to the virtual hub"

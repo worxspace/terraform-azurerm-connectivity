@@ -50,6 +50,40 @@ variable "vpn-sites" {
   description = "list of vpn sites to be connected to the virtual hub"
 }
 
+variable "vpn-s2s-gw-name" {
+  type        = string
+  description = "sku of the vpn gateway"
+  default     = null
+}
+
+variable "vpn-p2s-gw-sku" {
+  type        = string
+  description = "sku of the vpn gateway"
+  default     = "1"
+}
+
+variable "vpn-p2s-gw-name" {
+  type        = string
+  description = "sku of the vpn gateway"
+  default     = null
+}
+
+variable "vpn-s2s-gw-sku" {
+  type        = string
+  description = "sku of the vpn gateway"
+  default     = "1"
+}
+
+variable "user-vpn-config" {
+  type = object({
+    enabled       = bool
+    address-space = list(string)
+    tenant-id     = optional(string)
+    ad-group      = optional(string)
+    dns-servers   = list(string)
+  })
+}
+
 variable "global-tags" {
   type        = map(string)
   description = "global tags to be added to all resources"
